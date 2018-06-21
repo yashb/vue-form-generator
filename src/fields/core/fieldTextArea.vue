@@ -1,5 +1,5 @@
 <template lang="pug">
-	textarea.form-control.field(
+	textarea.form-control.textarea(
 		v-model="value",
 		:id="getFieldID(schema)",
 	  :class="schema.fieldClasses",

@@ -2,7 +2,7 @@
 <div class="vue-form-generator" v-if="schema != null">
 	<fieldset v-if="schema.fields" :is="tag"><template v-for="field in fields">
 		<div class="form-group field" v-if="fieldVisible(field)" :class="getFieldRowClasses(field)">
-		<label v-if="fieldTypeHasLabel(field)" :for="getFieldID(field)" :class="field.labelClasses">{{ field.label }}<span class="help" v-if="field.help"><i class="icon"></i>
+		<label v-if="fieldTypeHasLabel(field)" :for="getFieldID(field)" class="label">{{ field.label }}<span class="help" v-if="field.help"><i class="icon"></i>
 		<div class="helpText" v-html="field.help"></div>
 		</span>
 		</label>
