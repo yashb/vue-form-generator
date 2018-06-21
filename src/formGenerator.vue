@@ -1,377 +1,376 @@
 <template lang="pug">
-div.vue-form-generator(v-if='schema != null')
-	fieldset(v-if="schema.fields", :is='tag')
-		template(v-for='field in fields')
-			.form-group(v-if='fieldVisible(field)', :class='getFieldRowClasses(field)')
-				label(v-if="fieldTypeHasLabel(field)", :for="getFieldID(field)", :class="field.labelClasses")
-					| {{ field.label }}
-					span.help(v-if='field.help')
-						i.icon
-						.helpText(v-html='field.help')
-				.field-wrap.control
-					component(:is='getFieldType(field)', :disabled='fieldDisabled(field)', :model='model', :schema='field', :formOptions='options', @model-updated='modelUpdated', @validated="onFieldValidated")
-					.buttons(v-if='buttonVisibility(field)')
-						button(v-for='btn in field.buttons', @click='buttonClickHandler(btn, field, $event)', :class='btn.classes') {{ btn.label }}
-				.hint(v-if='field.hint') {{ fieldHint(field) }}
-				.errors.help-block(v-if='fieldErrors(field).length > 0')
-					span(v-for='(error, index) in fieldErrors(field)', v-html='error', track-by='index')
-
-	template(v-for='group in groups')
-		fieldset(:is='tag', :class='getFieldRowClasses(group)')
-			legend(v-if='group.legend') {{ group.legend }}
-			template(v-for='field in group.fields')
-				.form-group(v-if='fieldVisible(field)', :class='getFieldRowClasses(field)')
-					label(v-if="fieldTypeHasLabel(field)", :for="getFieldID(field)", :class="field.labelClasses")
-						| {{ field.label }}
-						span.help(v-if='field.help')
-							i.icon
-							.helpText(v-html='field.help')
-					.field-wrap
-						component(:is='getFieldType(field)', :disabled='fieldDisabled(field)', :model='model', :schema='field', :formOptions='options',@model-updated='modelUpdated', @validated="onFieldValidated")
-						.buttons(v-if='buttonVisibility(field)')
-							button(v-for='btn in field.buttons', @click='buttonClickHandler(btn, field, $event)', :class='btn.classes') {{ btn.label }}
-					.hint(v-if='field.hint') {{ field.hint }}
-					.errors.help-block(v-if='fieldErrors(field).length > 0')
-						span(v-for='(error, index) in fieldErrors(field)', v-html='error', track-by='index')
+<div class="vue-form-generator" v-if="schema != null">
+	<fieldset v-if="schema.fields" :is="tag"><template v-for="field in fields">
+		<div class="form-group field" v-if="fieldVisible(field)" :class="getFieldRowClasses(field)">
+		<label v-if="fieldTypeHasLabel(field)" :for="getFieldID(field)" :class="field.labelClasses">{{ field.label }}<span class="help" v-if="field.help"><i class="icon"></i>
+		<div class="helpText" v-html="field.help"></div>
+		</span>
+		</label>
+		<div class="field-wrap control">
+		<component :is="getFieldType(field)" :disabled="fieldDisabled(field)" :model="model" :schema="field" :formOptions="options" @model-updated="modelUpdated" @validated="onFieldValidated"></component>
+		<div class="buttons" v-if="buttonVisibility(field)">
+		<button v-for="btn in field.buttons" @click="buttonClickHandler(btn, field, $event)" :class="btn.classes">{{ btn.label }}</button>
+		</div>
+		</div>
+		<div class="hint" v-if="field.hint">{{ fieldHint(field) }}</div>
+		<div class="errors help-block" v-if="fieldErrors(field).length &gt; 0"><span v-for="(error, index) in fieldErrors(field)" v-html="error" track-by="index"></span></div>
+		</div>
+		</template>
+		</fieldset>
+	<template v-for="group in groups">
+		<fieldset :is="tag" :class="getFieldRowClasses(group)">
+			<legend v-if="group.legend">{{ group.legend }}</legend>
+				<template v-for="field in group.fields">
+				<div class="form-group field" v-if="fieldVisible(field)" :class="getFieldRowClasses(field)"><label v-if="fieldTypeHasLabel(field)" :for="getFieldID(field)" :class="field.labelClasses">{{ field.label }}<span class="help" v-if="field.help"><i class="icon"></i><div class="helpText" v-html="field.help"></div></span></label><div class="field-wrap"><component :is="getFieldType(field)" :disabled="fieldDisabled(field)" :model="model" :schema="field" :formOptions="options" @model-updated="modelUpdated" @validated="onFieldValidated"></component><div class="buttons" v-if="buttonVisibility(field)"><button v-for="btn in field.buttons" @click="buttonClickHandler(btn, field, $event)" :class="btn.classes">{{ btn.label }}</button></div></div><div class="hint" v-if="field.hint">{{ field.hint }}</div><div class="errors help-block" v-if="fieldErrors(field).length &gt; 0"><span v-for="(error, index) in fieldErrors(field)" v-html="error" track-by="index"></span></div></div></template></fieldset>
+		</template>
+</div>
 </template>
 
 <script>
-	// import Vue from "vue";
-	import { get as objGet, forEach, isFunction, isNil, isArray, isString } from "lodash";
-	import { slugifyFormID } from "./utils/schema";
+// import Vue from "vue";
+import {
+	get as objGet,
+	forEach,
+	isFunction,
+	isNil,
+	isArray,
+	isString
+} from "lodash";
+import {
+	slugifyFormID
+} from "./utils/schema";
 
-	// Load all fields from '../fields' folder
-	let fieldComponents = {};
+// Load all fields from '../fields' folder
+let fieldComponents = {};
 
-	let coreFields = require.context("./fields/core", false, /^\.\/field([\w-_]+)\.vue$/);
+let coreFields = require.context("./fields/core", false, /^\.\/field([\w-_]+)\.vue$/);
 
-	forEach(coreFields.keys(), (key) => {
+forEach(coreFields.keys(), (key) => {
+	let compName = key.replace(/^\.\//, "").replace(/\.vue/, "");
+	fieldComponents[compName] = coreFields(key);
+});
+
+if (process.env.FULL_BUNDLE) { // eslint-disable-line
+	let Fields = require.context("./fields/optional", false, /^\.\/field([\w-_]+)\.vue$/);
+
+	forEach(Fields.keys(), (key) => {
 		let compName = key.replace(/^\.\//, "").replace(/\.vue/, "");
-		fieldComponents[compName] = coreFields(key);
+		fieldComponents[compName] = Fields(key);
 	});
-
-	if (process.env.FULL_BUNDLE) {  // eslint-disable-line
-		let Fields = require.context("./fields/optional", false, /^\.\/field([\w-_]+)\.vue$/);
-
-		forEach(Fields.keys(), (key) => {
-			let compName = key.replace(/^\.\//, "").replace(/\.vue/, "");
-			fieldComponents[compName] = Fields(key);
-		});
-	}
+}
 
 
 
-	export default {
-		components: fieldComponents,
+export default {
+	components: fieldComponents,
 
-		props: {
-			schema: Object,
+	props: {
+		schema: Object,
 
-			model: Object,
+		model: Object,
 
-			options: {
-				type: Object,
-				default()  {
-					return {
-						validateAfterLoad: false,
-						validateAsync: false,
-						validateAfterChanged: false,
-						validationErrorClass: "error",
-						validationSuccessClass: ""
-					};
-				}
-			},
-
-			multiple: {
-				type: Boolean,
-				default: false
-			},
-
-			isNewModel: {
-				type: Boolean,
-				default: false
-			},
-
-			tag: {
-				type: String,
-				default: "fieldset",
-				validator: function (value) {
-					return value.length > 0;
-				}
+		options: {
+			type: Object,
+			default () {
+				return {
+					validateAfterLoad: false,
+					validateAsync: false,
+					validateAfterChanged: false,
+					validationErrorClass: "error",
+					validationSuccessClass: ""
+				};
 			}
 		},
 
-		data () {
-			return {
-				errors: [] // Validation errors
-			};
+		multiple: {
+			type: Boolean,
+			default: false
 		},
 
-		computed: {
-			fields() {
-				let res = [];
-				if (this.schema && this.schema.fields) {
-					forEach(this.schema.fields, (field) => {
-						if (!this.multiple || field.multi === true)
-							res.push(field);
-					});
-				}
+		isNewModel: {
+			type: Boolean,
+			default: false
+		},
 
-				return res;
-			},
-			groups() {
-				let res = [];
-				if (this.schema && this.schema.groups) {
-					forEach(this.schema.groups, (group) => {
-						res.push(group);
-					});
-				}
-
-				return res;
+		tag: {
+			type: String,
+			default: "fieldset",
+			validator: function(value) {
+				return value.length > 0;
 			}
-		},
+		}
+	},
 
-		watch: {
-			// new model loaded
-			model: function(newModel, oldModel) {
-				if (oldModel == newModel) // model property changed, skip
-					return;
+	data() {
+		return {
+			errors: [] // Validation errors
+		};
+	},
 
-				if (newModel != null) {
-					this.$nextTick(() => {
-						// Model changed!
-						if (this.options.validateAfterLoad === true && this.isNewModel !== true) {
-							this.validate();
-						} else {
-							this.clearValidationErrors();
-						}
-					});
-				}
+	computed: {
+		fields() {
+			let res = [];
+			if (this.schema && this.schema.fields) {
+				forEach(this.schema.fields, (field) => {
+					if (!this.multiple || field.multi === true)
+						res.push(field);
+				});
 			}
-		},
 
-		mounted() {
-			this.$nextTick(() => {
-				if (this.model) {
-					// First load, running validation if neccessary
+			return res;
+		},
+		groups() {
+			let res = [];
+			if (this.schema && this.schema.groups) {
+				forEach(this.schema.groups, (group) => {
+					res.push(group);
+				});
+			}
+
+			return res;
+		}
+	},
+
+	watch: {
+		// new model loaded
+		model: function(newModel, oldModel) {
+			if (oldModel == newModel) // model property changed, skip
+				return;
+
+			if (newModel != null) {
+				this.$nextTick(() => {
+					// Model changed!
 					if (this.options.validateAfterLoad === true && this.isNewModel !== true) {
 						this.validate();
 					} else {
 						this.clearValidationErrors();
 					}
+				});
+			}
+		}
+	},
+
+	mounted() {
+		this.$nextTick(() => {
+			if (this.model) {
+				// First load, running validation if neccessary
+				if (this.options.validateAfterLoad === true && this.isNewModel !== true) {
+					this.validate();
+				} else {
+					this.clearValidationErrors();
 				}
+			}
+		});
+	},
+
+	methods: {
+		// Get style classes of field
+		getFieldRowClasses(field) {
+			const hasErrors = this.fieldErrors(field).length > 0;
+			let baseClasses = {
+				[objGet(this.options, "validationErrorClass", "error")]: hasErrors,
+				[objGet(this.options, "validationSuccessClass", "valid")]: !hasErrors,
+				disabled: this.fieldDisabled(field),
+				readonly: this.fieldReadonly(field),
+				featured: this.fieldFeatured(field),
+				required: this.fieldRequired(field)
+			};
+
+			if (isArray(field.styleClasses)) {
+				forEach(field.styleClasses, (c) => baseClasses[c] = true);
+			} else if (isString(field.styleClasses)) {
+				baseClasses[field.styleClasses] = true;
+			}
+
+			if (!isNil(field.type)) {
+				baseClasses["field-" + field.type] = true;
+			}
+
+			return baseClasses;
+		},
+
+		// Get type of field 'field-xxx'. It'll be the name of HTML element
+		getFieldType(fieldSchema) {
+			return "field-" + fieldSchema.type;
+		},
+
+		// Should field type have a label?
+		fieldTypeHasLabel(field) {
+			if (isNil(field.label)) return false;
+
+			let relevantType = "";
+			if (field.type === "input") {
+				relevantType = field.inputType;
+			} else {
+				relevantType = field.type;
+			}
+
+			switch (relevantType) {
+				case "button":
+				case "submit":
+				case "reset":
+					return false;
+				default:
+					return true;
+			}
+		},
+
+		// Get disabled attr of field
+		fieldDisabled(field) {
+			if (isFunction(field.disabled))
+				return field.disabled.call(this, this.model, field, this);
+
+			if (isNil(field.disabled))
+				return false;
+
+			return field.disabled;
+		},
+
+		// Get required prop of field
+		fieldRequired(field) {
+			if (isFunction(field.required))
+				return field.required.call(this, this.model, field, this);
+
+			if (isNil(field.required))
+				return false;
+
+			return field.required;
+		},
+
+		// Get visible prop of field
+		fieldVisible(field) {
+			if (isFunction(field.visible))
+				return field.visible.call(this, this.model, field, this);
+
+			if (isNil(field.visible))
+				return true;
+
+			return field.visible;
+		},
+
+		// Get readonly prop of field
+		fieldReadonly(field) {
+			if (isFunction(field.readonly))
+				return field.readonly.call(this, this.model, field, this);
+
+			if (isNil(field.readonly))
+				return false;
+
+			return field.readonly;
+		},
+
+		// Get featured prop of field
+		fieldFeatured(field) {
+			if (isFunction(field.featured))
+				return field.featured.call(this, this.model, field, this);
+
+			if (isNil(field.featured))
+				return false;
+
+			return field.featured;
+		},
+
+		// Get current hint.
+		fieldHint(field) {
+			if (isFunction(field.hint))
+				return field.hint.call(this, this.model, field, this);
+
+			return field.hint;
+		},
+
+		buttonClickHandler(btn, field, event) {
+			return btn.onclick.call(this, this.model, field, event, this);
+		},
+
+		// Child field executed validation
+		onFieldValidated(res, errors, field) {
+			// Remove old errors for this field
+			this.errors = this.errors.filter(e => e.field != field.schema);
+
+			if (!res && errors && errors.length > 0) {
+				// Add errors with this field
+				forEach(errors, (err) => {
+					this.errors.push({
+						field: field.schema,
+						error: err
+					});
+				});
+			}
+
+			let isValid = this.errors.length == 0;
+			this.$emit("validated", isValid, this.errors);
+		},
+
+		// Validating the model properties
+		validate(isAsync = null) {
+			if (isAsync === null) {
+				isAsync = objGet(this.options, "validateAsync", false);
+			}
+			this.clearValidationErrors();
+
+			let fields = [];
+			let results = [];
+
+			forEach(this.$children, (child) => {
+				if (isFunction(child.validate)) {
+					fields.push(child); // keep track of validated children
+					results.push(child.validate(true));
+				}
+			});
+
+			let handleErrors = (errors) => {
+				let formErrors = [];
+				forEach(errors, (err, i) => {
+					if (isArray(err) && err.length > 0) {
+						forEach(err, (error) => {
+							formErrors.push({
+								field: fields[i].schema,
+								error: error,
+							});
+						});
+					}
+				});
+				this.errors = formErrors;
+				let isValid = formErrors.length == 0;
+				this.$emit("validated", isValid, formErrors);
+				return isAsync ? formErrors : isValid;
+			};
+
+			if (!isAsync) {
+				return handleErrors(results);
+			}
+
+			return Promise.all(results).then(handleErrors);
+		},
+
+		// Clear validation errors
+		clearValidationErrors() {
+			this.errors.splice(0);
+
+			forEach(this.$children, (child) => {
+				child.clearValidationErrors();
 			});
 		},
 
-		methods: {
-			// Get style classes of field
-			getFieldRowClasses(field) {
-				const hasErrors = this.fieldErrors(field).length > 0;
-				let baseClasses = {
-					[objGet(this.options, "validationErrorClass", "error")]: hasErrors,
-					[objGet(this.options, "validationSuccessClass", "valid")]: !hasErrors,
-					disabled: this.fieldDisabled(field),
-					readonly: this.fieldReadonly(field),
-					featured: this.fieldFeatured(field),
-					required: this.fieldRequired(field)
-				};
+		modelUpdated(newVal, schema) {
+			this.$emit("model-updated", newVal, schema);
+		},
 
-				if (isArray(field.styleClasses)) {
-					forEach(field.styleClasses, (c) => baseClasses[c] = true);
-				} else if (isString(field.styleClasses)) {
-					baseClasses[field.styleClasses] = true;
-				}
+		buttonVisibility(field) {
+			return field.buttons && field.buttons.length > 0;
+		},
 
-				if (!isNil(field.type)) {
-					baseClasses["field-" + field.type] = true;
-				}
+		fieldErrors(field) {
+			let res = this.errors.filter(e => e.field == field);
+			return res.map(item => item.error);
+		},
 
-				return baseClasses;
-			},
-
-			// Get type of field 'field-xxx'. It'll be the name of HTML element
-			getFieldType(fieldSchema) {
-				return "field-" + fieldSchema.type;
-			},
-
-			// Should field type have a label?
-			fieldTypeHasLabel(field) {
-				if(isNil(field.label)) return false;
-
-				let relevantType = "";
-				if (field.type === "input") {
-					relevantType = field.inputType;
-				} else {
-					relevantType = field.type;
-				}
-
-				switch (relevantType) {
-					case "button":
-					case "submit":
-					case "reset":
-						return false;
-					default:
-						return true;
-				}
-			},
-
-			// Get disabled attr of field
-			fieldDisabled(field) {
-				if (isFunction(field.disabled))
-					return field.disabled.call(this, this.model, field, this);
-
-				if (isNil(field.disabled))
-					return false;
-
-				return field.disabled;
-			},
-
-			// Get required prop of field
-			fieldRequired(field) {
-				if (isFunction(field.required))
-					return field.required.call(this, this.model, field, this);
-
-				if (isNil(field.required))
-					return false;
-
-				return field.required;
-			},
-
-			// Get visible prop of field
-			fieldVisible(field) {
-				if (isFunction(field.visible))
-					return field.visible.call(this, this.model, field, this);
-
-				if (isNil(field.visible))
-					return true;
-
-				return field.visible;
-			},
-
-			// Get readonly prop of field
-			fieldReadonly(field) {
-				if (isFunction(field.readonly))
-					return field.readonly.call(this, this.model, field, this);
-
-				if (isNil(field.readonly))
-					return false;
-
-				return field.readonly;
-			},
-
-			// Get featured prop of field
-			fieldFeatured(field) {
-				if (isFunction(field.featured))
-					return field.featured.call(this, this.model, field, this);
-
-				if (isNil(field.featured))
-					return false;
-
-				return field.featured;
-			},
-
-			// Get current hint.
-			fieldHint(field){
-				if (isFunction(field.hint))
-					return field.hint.call(this, this.model, field, this);
-
-				return field.hint;
-			},
-
-			buttonClickHandler(btn, field, event) {
-				return btn.onclick.call(this, this.model, field, event, this);
-			},
-
-			// Child field executed validation
-			onFieldValidated(res, errors, field) {
-				// Remove old errors for this field
-				this.errors = this.errors.filter(e => e.field != field.schema);
-
-				if (!res && errors && errors.length > 0) {
-					// Add errors with this field
-					forEach(errors, (err) => {
-						this.errors.push({
-							field: field.schema,
-							error: err
-						});
-					});
-				}
-
-				let isValid = this.errors.length == 0;
-				this.$emit("validated", isValid, this.errors);
-			},
-
-			// Validating the model properties
-			validate(isAsync = null) {
-				if(isAsync === null) {
-					isAsync = objGet(this.options, "validateAsync", false);
-				}
-				this.clearValidationErrors();
-
-				let fields = [];
-				let results = [];
-
-				forEach(this.$children, (child) => {
-					if (isFunction(child.validate)) {
-						fields.push(child); // keep track of validated children
-						results.push(child.validate(true));
-					}
-				});
-
-				let handleErrors = (errors) => {
-					let formErrors = [];
-					forEach(errors, (err, i) => {
-						if(isArray(err) && err.length > 0) {
-							forEach(err, (error) => {
-								formErrors.push({
-									field: fields[i].schema,
-									error: error,
-								});
-							});
-						}
-					});
-					this.errors = formErrors;
-					let isValid = formErrors.length == 0;
-					this.$emit("validated", isValid, formErrors);
-					return isAsync ? formErrors : isValid;
-				};
-
-				if(!isAsync) {
-					return handleErrors(results);
-				}
-
-				return Promise.all(results).then(handleErrors);
-			},
-
-			// Clear validation errors
-			clearValidationErrors() {
-				this.errors.splice(0);
-
-				forEach(this.$children, (child) => {
-					child.clearValidationErrors();
-				});
-			},
-
-			modelUpdated(newVal, schema){
-				this.$emit("model-updated", newVal, schema);
-			},
-
-			buttonVisibility(field) {
-				return field.buttons && field.buttons.length > 0;
-			},
-
-			fieldErrors(field) {
-				let res = this.errors.filter(e => e.field == field);
-				return res.map(item => item.error);
-			},
-
-			getFieldID(schema) {
-				const idPrefix = this.options && this.options.fieldIdPrefix ? this.options.fieldIdPrefix : "";
-				return slugifyFormID(schema, idPrefix);
-			}
+		getFieldID(schema) {
+			const idPrefix = this.options && this.options.fieldIdPrefix ? this.options.fieldIdPrefix : "";
+			return slugifyFormID(schema, idPrefix);
 		}
-	};
-
+	}
+};
 </script>
 
 <style lang="sass">

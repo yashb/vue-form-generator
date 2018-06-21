@@ -1,5 +1,5 @@
 <template lang="pug">
-	textarea.form-control(
+	textarea.form-control.field(
 		v-model="value",
 		:id="getFieldID(schema)",
 	  :class="schema.fieldClasses",
@@ -18,7 +18,7 @@
 	export default {
 		mixins: [ abstractField ]
 	};
-	
+
 </script>
 
 
