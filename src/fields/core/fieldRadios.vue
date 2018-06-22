@@ -1,8 +1,8 @@
 <template lang="pug">
 	.radio-list(:disabled="disabled")
 		div(v-for="item in items",class="field")
-			input(:id="getFieldID(schema)", type="radio", :disabled="disabled", :name="id", @click="onSelection(item)", :value="getItemValue(item)", :checked="isItemChecked(item)", :class="schema.fieldClasses" class="is-checkradio is-info")
-			label(:class="{'is-checked': isItemChecked(item)}",:for="getFieldID(schema)")
+			input(:id="getItemCustomId(schema)", type="radio", :disabled="disabled", :name="id", @click="onSelection(item)", :value="getItemValue(item)", :checked="isItemChecked(item)", :class="schema.fieldClasses" class="is-checkradio is-info")
+			label(:class="{'is-checked': isItemChecked(item)}",:for="getItemCustomId(schema)")
 				| {{ getItemName(item) }}
 
 </template>
@@ -13,6 +13,10 @@
 
 	export default {
 		mixins: [ abstractField ],
+
+		data:{
+			custom_id: -1
+		},
 
 		computed: {
 			items() {
@@ -29,6 +33,11 @@
 		},
 
 		methods: {
+			getItemCustomId(schema){
+				this.custom_id = this.custom_id + 1;
+				return this.getFieldID(schema) + this.custom_id.toString();
+			},
+
 			getItemValue(item) {
 				if (isObject(item)){
 					if (typeof this.schema["radiosOptions"] !== "undefined" && typeof this.schema["radiosOptions"]["value"] !== "undefined") {
