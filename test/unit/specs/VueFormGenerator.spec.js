@@ -100,7 +100,7 @@ describe("VueFormGenerator.vue", () => {
 		});
 
 		it("should be minimal classes", () => {
-			//expect(group.classList.length).to.be.equal(2);
+			expect(group.classList.length).to.be.equal(3);
 			expect(group.classList.contains("form-group")).to.be.true;
 			expect(group.classList.contains("field-input")).to.be.true;
 		});
@@ -205,15 +205,15 @@ describe("VueFormGenerator.vue", () => {
 		};
 		let label;
 
-		// before( () => {
-		// 	createFormGenerator(schema);
-		// 	label = el.querySelector("label");
-		// });
-		//
-		// it("should be 2 classes", () => {
-		// 	expect(label.classList.contains("applied-class")).to.be.true;
-		// 	expect(label.classList.contains("another-class")).to.be.true;
-		// });
+		before( () => {
+			createFormGenerator(schema);
+			label = el.querySelector("label");
+		});
+
+		it("should be 2 classes", () => {
+			expect(label.classList.contains("applied-class")).to.be.true;
+			expect(label.classList.contains("another-class")).to.be.true;
+		});
 
 	});
 

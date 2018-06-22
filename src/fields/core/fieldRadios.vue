@@ -2,7 +2,7 @@
 	.radio-list(:disabled="disabled")
 		div(v-for="(item, index) in items",class="field")
 			input(:id="getItemCustomId(schema, index)", type="radio", :disabled="disabled", :name="id", @click="onSelection(item)", :value="getItemValue(item)", :checked="isItemChecked(item)", :class="schema.fieldClasses" class="is-checkradio is-info")
-			label(:class="{'is-checked': isItemChecked(item)}",:for="getItemCustomId(schema, index)")
+			label(:class="{'is-checked': isItemChecked(item)}", :for="getItemCustomId(schema, index)")
 				| {{ getItemName(item) }}
 
 </template>
