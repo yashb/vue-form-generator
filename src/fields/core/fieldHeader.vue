@@ -1,6 +1,6 @@
 <template>
-  <section class="hero is-primary">
-    <div class="hero-body">
+  <section class="hero" :class="schema.heroColorClass">
+    <div :class="schema.heroBodyClass">
       <div class="container">
         <h1 class="title">
           {{schema.title}}
