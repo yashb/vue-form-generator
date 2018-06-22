@@ -1,8 +1,8 @@
 <template lang="pug">
 	.radio-list(:disabled="disabled")
-		div(v-for="item in items",class="field")
-			input(:id="getItemCustomId(schema)", type="radio", :disabled="disabled", :name="id", @click="onSelection(item)", :value="getItemValue(item)", :checked="isItemChecked(item)", :class="schema.fieldClasses" class="is-checkradio is-info")
-			label(:class="{'is-checked': isItemChecked(item)}",:for="getItemCustomId(schema)")
+		div(v-for="(item, index) in items",class="field")
+			input(:id="getItemCustomId(schema, index)", type="radio", :disabled="disabled", :name="id", @click="onSelection(item)", :value="getItemValue(item)", :checked="isItemChecked(item)", :class="schema.fieldClasses" class="is-checkradio is-info")
+			label(:class="{'is-checked': isItemChecked(item)}",:for="getItemCustomId(schema, index)")
 				| {{ getItemName(item) }}
 
 </template>
@@ -13,10 +13,6 @@
 
 	export default {
 		mixins: [ abstractField ],
-
-		data:{
-			custom_id: -1
-		},
 
 		computed: {
 			items() {
@@ -33,9 +29,8 @@
 		},
 
 		methods: {
-			getItemCustomId(schema){
-				this.custom_id = this.custom_id + 1;
-				return this.getFieldID(schema) + this.custom_id.toString();
+			getItemCustomId(schema, index){
+				return this.getFieldID(schema) + index.toString();
 			},
 
 			getItemValue(item) {
