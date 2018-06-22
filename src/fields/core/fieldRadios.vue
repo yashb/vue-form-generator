@@ -1,15 +1,16 @@
 <template lang="pug">
 	.radio-list(:disabled="disabled")
-		label(v-for="item in items", :class="{'is-checked': isItemChecked(item)}")
+		div(v-for="item in items")
 			input(:id="getFieldID(schema)", type="radio", :disabled="disabled", :name="id", @click="onSelection(item)", :value="getItemValue(item)", :checked="isItemChecked(item)", :class="schema.fieldClasses")
-			| {{ getItemName(item) }}
+			label(:class="{'is-checked': isItemChecked(item)}",:for="getFieldID(schema)")
+				| {{ getItemName(item) }}
 
 </template>
 
 <script>
 	import {isObject} from "lodash";
 	import abstractField from "../abstractField";
-	
+
 	export default {
 		mixins: [ abstractField ],
 
