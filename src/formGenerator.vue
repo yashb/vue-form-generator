@@ -1,6 +1,6 @@
-<template lang="pug">
-<div class="vue-form-generator" v-if="schema != null">
-	<fieldset v-if="schema.fields" :is="tag"><template v-for="field in fields">
+<template>
+<div class="vue-form-generator columns" v-if="schema != null">
+	<fieldset v-if="schema.fields" :is="tag"><template v-for="field in fields" class="column">
 		<div class="form-group field" v-if="fieldVisible(field)" :class="getFieldRowClasses(field)">
 		<label v-if="fieldTypeHasLabel(field)" :for="getFieldID(field)" :class="field.labelClasses" class="label">{{ field.label }}<span class="help" v-if="field.help"><i class="icon"></i>
 		<div class="helpText" v-html="field.help"></div>
