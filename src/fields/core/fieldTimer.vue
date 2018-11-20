@@ -1,108 +1,87 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    </head>
-  <body>
-    <nav class="controls">
-			<a href="#" class="button" onClick="stopwatch.start();">Start</a>
-			<a href="#" class="button" onClick="stopwatch.lap();">Lap</a>
-			<a href="#" class="button" onClick="stopwatch.stop();">Stop</a>
-			<a href="#" class="button" onClick="stopwatch.restart();">Restart</a>
-			<a href="#" class="button" onClick="stopwatch.clear();">Clear Laps</a>
-		</nav>
-		<div class="stopwatch"></div>
-		<ul class="results"></ul>
-    <script type="text/javascript">
-    class Stopwatch {
-    constructor(display, results) {
-        this.running = false;
-        this.display = display;
-        this.results = results;
-        this.laps = [];
-        this.reset();
-        this.print(this.times);
+<template lang="pug">
+	.input-group.date
+		input.form-control(type="text", v-model="value", :autocomplete="schema.autocomplete", :disabled="disabled", :placeholder="schema.placeholder", :readonly="schema.readonly", :name="schema.inputName", :id="getFieldID(schema)")
+		span.input-group-addon
+</template>
+
+<script>
+	 	import abstractField from "../abstractField";
+	 	import { defaults } from "lodash";
+
+		// let times= [];
+    // let animateFrame= 0;
+    //   let nowTime= 0;
+    //   let diffTime= 0;
+    //   let startTime= 0;
+    //   let isRunning= false;
+
+   export default({
+  name: "Timer",
+  data(){
+    return {
+      times: [],
+      animateFrame: 0,
+      nowTime: 0,
+      diffTime: 0,
+      startTime: 0,
+      isRunning: false
+    };
+  },
+  methods: {
+    setSubtractStartTime: function () {
+      let time = typeof time !== 'undefined' ? time : 0;
+      this.startTime = Math.floor(performance.now() - time);
+    },
+    startTimer: function () {
+      let vm = this;
+      vm.setSubtractStartTime(vm.diffTime);
+      (function loop(){
+        vm.nowTime = Math.floor(performance.now());
+        vm.diffTime = vm.nowTime - vm.startTime;
+        vm.animateFrame = requestAnimationFrame(loop);
+      }());
+      vm.isRunning = true;
+    },
+    stopTimer: function () {
+      this.isRunning = false;
+      cancelAnimationFrame(this.animateFrame);
+    },
+    pushTime: function () {
+      this.times.push({
+        hours: this.hours,
+        minutes: this.minutes,
+        seconds: this.seconds,
+        milliSeconds: this.milliSeconds
+				});
+    },
+    // clearAll: function () {
+    //   this.startTime = 0;
+    //   this.nowTime = 0;
+    //   this.diffTime = 0;
+    //   this.times = [];
+    //   this.stopTimer();
+    //   this.animateFrame = 0;
+    // }
+  },
+  computed: {
+    hours: function () {
+      return Math.floor(this.diffTime / 1000 / 60 / 60);
+    },
+    minutes: function () {
+      return Math.floor(this.diffTime / 1000 / 60) % 60;
+    },
+    seconds: function () {
+      return Math.floor(this.diffTime / 1000) % 60;
+    },
+    milliSeconds: function () {
+      return Math.floor(this.diffTime % 1000);
     }
-
-    reset() {
-        this.times = [ 0, 0, 0 ];
+  },
+  filters: {
+    zeroPad: function(value){
+      let num = typeof num !== 'undefined' ? num : 2;
+      return value.toString().padStart(num,"0");
     }
-
-    start() {
-        if (!this.time) this.time = performance.now();
-        if (!this.running) {
-            this.running = true;
-            requestAnimationFrame(this.step.bind(this));
-        }
-    }
-    stop() {
-        this.running = false;
-        this.time = null;
-    }
-
-    restart() {
-        if (!this.time) this.time = performance.now();
-        if (!this.running) {
-            this.running = true;
-            requestAnimationFrame(this.step.bind(this));
-        }
-        this.reset();
-    }
-
-    clear() {
-        clearChildren(this.results);
-    }
-
-    step(timestamp) {
-        if (!this.running) return;
-        this.calculate(timestamp);
-        this.time = timestamp;
-        this.print();
-        requestAnimationFrame(this.step.bind(this));
-    }
-
-    calculate(timestamp) {
-        let diff = timestamp - this.time;
-        // Hundredths of a second are 100 ms
-        this.times[2] += diff / 10;
-        // Seconds are 100 hundredths of a second
-        if (this.times[2] >= 100) {
-            this.times[1] += 1;
-            this.times[2] -= 100;
-        }
-        // Minutes are 60 seconds
-        if (this.times[1] >= 60) {
-            this.times[0] += 1;
-            this.times[1] -= 60;
-        }
-    }
-
-    print() {
-        this.display.innerText = this.format(this.times);
-    }
-
-    format(times) {
-        return `\
-${pad0(times[0], 2)}:\
-${pad0(times[1], 2)}:\
-${pad0(Math.floor(times[2]), 2)}`;
-    }
-}
-
-function pad0(value, count) {
-    let result = value.toString();
-    for (; result.length < count; --count)
-        result = '0' + result;
-    return result;
-}
-
-function clearChildren(node) {
-    while (node.lastChild)
-        node.removeChild(node.lastChild);
-}
-
-let stopwatch = new Stopwatch(
-    document.querySelector('.stopwatch'),
-    document.querySelector('.results'));
-    </script>
-  </body>
-</html>
+  }
+});
+</script>
