@@ -1,6 +1,6 @@
 <template>
-  <section class="hero" :class="heroColorClass">
-    <div :class="heroBodyClass">
+  <section class="hero" :class="schema.heroColorClass">
+    <div :class="schema.heroBodyClass">
         <h1 class="title">
           {{title}}
         </h1>
