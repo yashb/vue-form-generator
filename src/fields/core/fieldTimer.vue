@@ -1,32 +1,29 @@
-<template lang="pug">
-
-		input.form-control(type="text", v-model="value", :onclick="startTimer"
-		:required="schema.required",
-		:autocomplete="schema.autocomplete",
-		:disabled="disabled",
-		:placeholder="schema.placeholder",
-		:readonly="schema.readonly",
-		:name="schema.inputName",
-		:id="getFieldID(schema)")
-		span.input-group-addon
+<template>
+	<div id="Timer" class="ui text container">
+    <h6>
+      {{ minutes | zeroPad }} :
+      {{ seconds | zeroPad }} :
+      {{ milliSeconds | zeroPad(3) }}
+		</h6>
+      <div>
+        <button class="button is-info is-outlined" @click="startTimer" :disabled="isRunning">START</button>
+        <button class="button is-danger is-outlined" @click="stopTimer" :disabled="!isRunning">STOP</button>
+      </div>
+  </div>
 </template>
 
 <script>
-	 	// import abstractField from "../abstractField";
-	 	// import { defaults } from "lodash";
-
-
-   export default({
-  name: "Timer",
-  data(){
-    return {
-      times: [],
-      animateFrame: 0,
-      nowTime: 0,
-      diffTime: 0,
-      startTime: 0,
-      isRunning: false
-    };
+export default({
+	name: "Timer",
+	data(){
+		return {
+			times: [],
+			animateFrame: 0,
+			nowTime: 0,
+			diffTime: 0,
+			startTime: 0,
+			isRunning: false
+		};
   },
   methods: {
     setSubtractStartTime: function () {
@@ -55,14 +52,6 @@
         milliSeconds: this.milliSeconds
 				});
     },
-    // clearAll: function () {
-    //   this.startTime = 0;
-    //   this.nowTime = 0;
-    //   this.diffTime = 0;
-    //   this.times = [];
-    //   this.stopTimer();
-    //   this.animateFrame = 0;
-    // }
   },
   computed: {
     hours: function () {
