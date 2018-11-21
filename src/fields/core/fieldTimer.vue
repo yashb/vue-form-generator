@@ -1,10 +1,10 @@
 <template>
-	<div class="timer">
+	<div :class="schema.timer">
     <h4 class="minutes">{{ minutes }}:</h4>
     <h4 class="seconds">{{ seconds }}:</h4>
     <h4 class="milliSeconds">{{ milliSeconds }}</h4>
 		</h6>
-      <div class="button">
+      <div :class="schema.button">
         <button class="button is-info is-outlined" @click="startTimer" :disabled="isRunning">START</button>
         <button class="button is-danger is-outlined" @click="stopTimer" :disabled="!isRunning">STOP</button>
       </div>
