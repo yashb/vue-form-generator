@@ -1,9 +1,8 @@
 <template>
 	<div id="Timer" :class="schema.timer">
-    <h6>
-      {{ minutes | zeroPad }} :
-      {{ seconds | zeroPad }} :
-      {{ milliSeconds | zeroPad(3) }}
+    <h4 class="minutes">{{ schema.minutes }}:</h4>
+    <h4 class="seconds">{{ schema.seconds }}:</h4>
+    <h4 class="milliSeconds">{{ schema.milliSeconds }}</h4>
 		</h6>
       <div :class="schema.button">
         <button class="button1" @click="startTimer" :disabled="isRunning">START</button>
@@ -67,11 +66,5 @@ export default({
       return Math.floor(this.diffTime % 1000);
     }
   },
-  filters: {
-    zeroPad: function(value){
-      let num = typeof num !== 'undefined' ? num : 2;
-      return value.toString().padStart(num,"0");
-    }
-  }
 });
 </script>
