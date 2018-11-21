@@ -1,14 +1,14 @@
 <template>
-  <!-- <section class="hero" :class="schema.heroColorClass">
-    <div :class="schema.heroBodyClass">
+  <section class="hero" :class="heroColorClass">
+    <div :class="heroBodyClass">
         <h1 class="title">
-          {{schema.title}}
+          {{title}}
         </h1>
         <h2 class="subtitle">
-          {{schema.subtitle}}
+          {{subtitle}}
         </h2>
     </div>
-  </section> -->
+  </section>
 </template>
 
 <script>
