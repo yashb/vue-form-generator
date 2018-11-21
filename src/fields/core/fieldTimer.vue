@@ -1,12 +1,12 @@
 <template>
 	<div id="Timer" :class="schema.timer">
-    <h4 class="minutes">{{ schema.minutes }}:</h4>
-    <h4 class="seconds">{{ schema.seconds }}:</h4>
-    <h4 class="milliSeconds">{{ schema.milliSeconds }}</h4>
+    <h4 class="minutes">{{ minutes }}:</h4>
+    <h4 class="seconds">{{ seconds }}:</h4>
+    <h4 class="milliSeconds">{{ milliSeconds }}</h4>
 		</h6>
       <div :class="schema.button">
-        <button class="button1" @click="startTimer" :disabled="isRunning">START</button>
-        <button class="button2" @click="stopTimer" :disabled="!isRunning">STOP</button>
+        <button type="button" class="button1" @click="startTimer" :disabled="isRunning">START</button>
+        <button type="button" class="button2" @click="stopTimer" :disabled="!isRunning">STOP</button>
       </div>
   </div>
 </template>
