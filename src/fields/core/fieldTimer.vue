@@ -1,13 +1,13 @@
 <template>
-	<div id="Timer" class="ui text container">
+	<div id="Timer" :class="schema.timer">
     <h6>
       {{ minutes | zeroPad }} :
       {{ seconds | zeroPad }} :
       {{ milliSeconds | zeroPad(3) }}
 		</h6>
-      <div>
-        <button class="button is-info is-outlined" @click="startTimer" :disabled="isRunning">START</button>
-        <button class="button is-danger is-outlined" @click="stopTimer" :disabled="!isRunning">STOP</button>
+      <div :class="schema.button">
+        <button class="button1" @click="startTimer" :disabled="isRunning">START</button>
+        <button class="button2" @click="stopTimer" :disabled="!isRunning">STOP</button>
       </div>
   </div>
 </template>
