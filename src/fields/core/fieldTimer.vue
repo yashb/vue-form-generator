@@ -1,19 +1,20 @@
 <template lang="pug">
-	.input-group.date
-		input.form-control(type="text", v-model="value", :autocomplete="schema.autocomplete", :disabled="disabled", :placeholder="schema.placeholder", :readonly="schema.readonly", :name="schema.inputName", :id="getFieldID(schema)")
+
+		input.form-control(type="text", v-model="value", :onclick="startTimer"
+		:required="schema.required",
+		:autocomplete="schema.autocomplete",
+		:disabled="disabled",
+		:placeholder="schema.placeholder",
+		:readonly="schema.readonly",
+		:name="schema.inputName",
+		:id="getFieldID(schema)")
 		span.input-group-addon
 </template>
 
 <script>
-	 	import abstractField from "../abstractField";
-	 	import { defaults } from "lodash";
+	 	// import abstractField from "../abstractField";
+	 	// import { defaults } from "lodash";
 
-		// let times= [];
-    // let animateFrame= 0;
-    //   let nowTime= 0;
-    //   let diffTime= 0;
-    //   let startTime= 0;
-    //   let isRunning= false;
 
    export default({
   name: "Timer",
