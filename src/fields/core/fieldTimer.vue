@@ -1,7 +1,7 @@
 <template>
 	<div class="timer" :class="schema.timerColorClass">
 		<div :class="schema.timerBodyClass">
-			<h1 class="minutes">{{ minutes }}:{{ seconds }}:{{ milliSeconds }}</h1>
+			<h6> class="minutes">{{ minutes }}:{{ seconds }}:{{ milliSeconds }}</h6>
 		</div>
     <div :class="schema.button">
       <button class="button is-info is-outlined" @click="startTimer" :disabled="isRunning">START</button>
@@ -69,5 +69,8 @@ export default({
   },
 });
 </script>
-<style lang="sass">
+<style lang="css">
+h6{
+	font-size: 30px;
+}
 </style>
