@@ -1,9 +1,9 @@
 <template>
 	<div class="timer" :class="schema.timerColorClass">
 		<div :class="schema.timerBodyClass">
-			<h4 class="minutes">{{ minutes }}:</h4>
-	    <h4 class="seconds">{{ seconds }}:</h4>
-	    <h4 class="milliSeconds">{{ milliSeconds }}</h4>
+			<h4 class="minutes">{{ schema.minutes }}:</h4>
+	    <h4 class="seconds">{{ schema.seconds }}:</h4>
+	    <h4 class="milliSeconds">{{ schema.milliSeconds }}</h4>
 		</div>
     <div :class="schema.button">
       <button class="button is-info is-outlined" @click="startTimer" :disabled="isRunning">START</button>
