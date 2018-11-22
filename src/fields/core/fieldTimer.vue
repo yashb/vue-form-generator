@@ -1,8 +1,8 @@
 <template>
 	<div class="timer">
-		<div class="field is-grouped">
+		<div>
 
-			<span style="font-size:30px" class="control">{{ minutes }}:{{ seconds }}:{{ milliSeconds }}</span>
+			<span>{{ minutes }}:{{ seconds }}:{{ milliSeconds }}</span>
 		</div>
     <div>
       <button class="button is-info is-outlined" @click="startTimer" :disabled="isRunning">START</button>
