@@ -70,7 +70,7 @@ export default({
   },
 });
 </script>
-<style lang="css">
+<style>
 p{
 	font-size: 30px;
 }
