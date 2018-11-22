@@ -1,10 +1,10 @@
 <template>
 	<div class="timer">
-    <span style="font-size:20px"><input type="text" name="timerhidden" v-model="diffTime" />{{ minutes }}:{{ seconds }}:{{ milliSeconds }} </span>
+    <span style="font-size:20px"><input type="hidden" name="timerhidden" v-model="diffTime" />{{ minutes }}:{{ seconds }}:{{ milliSeconds }} </span>
 
       <div>
-        <button class="button is-info is-outlined" @click="startTimer" :disabled="isRunning">START</button>
-        <button class="button is-danger is-outlined" @click="stopTimer" :disabled="!isRunning">STOP</button>
+        <button class="button1 is-info is-outlined" @click="startTimer" :disabled="isRunning">START</button>
+        <button class="button1 is-danger is-outlined" @click="stopTimer" :disabled="!isRunning">STOP</button>
       </div>
   </div>
 	<!-- <div class="timer">
