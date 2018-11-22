@@ -1,15 +1,11 @@
 <template>
 	<div class="timer">
-    <span style="font-size:20px">{{ minutes }}:{{ seconds }}:{{ milliSeconds }} {{ diffTime }}</span>
+    <span style="font-size:20px">{{ diffTime }}:{{ seconds }}:{{ milliSeconds }} {{ diffTime }}</span>
       <div>
         <button class="button is-info is-outlined" @click="startTimer" :disabled="isRunning">START</button>
         <button class="button is-danger is-outlined" @click="stopTimer" :disabled="!isRunning">STOP</button>
       </div>
   </div>
-	<div class="timerhidden">
-		<span>{{ diffTime }}</span>
-
-	</div>
 	<!-- <div class="timer">
 		<div>
 
