@@ -2,7 +2,7 @@
 	<div class="timer">
 		<div class="field is-grouped">
 
-			<p class="control">{{ minutes }}:{{ seconds }}:{{ milliSeconds }}</p>
+			<span style="font-size:30px" class="control">{{ minutes }}:{{ seconds }}:{{ milliSeconds }}</span>
 		</div>
     <div>
       <button class="button is-info is-outlined" @click="startTimer" :disabled="isRunning">START</button>
@@ -71,7 +71,5 @@ export default({
 });
 </script>
 <style>
-p{
-	font-size: 30px;
-}
+
 </style>
