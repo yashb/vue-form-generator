@@ -1,8 +1,8 @@
 <template>
 	<div class="timer">
-		<div>
-			<h6> class="minutes">{{ minutes }}:{{ seconds }}:{{ milliSeconds }}</h6>
-		</div>
+
+			<p> class="minutes">{{ minutes }}:{{ seconds }}:{{ milliSeconds }}</p>
+		
     <div>
       <button class="button is-info is-outlined" @click="startTimer" :disabled="isRunning">START</button>
       <button class="button is-danger is-outlined" @click="stopTimer" :disabled="!isRunning">STOP</button>
@@ -70,7 +70,7 @@ export default({
 });
 </script>
 <style lang="css">
-h6{
+p{
 	font-size: 30px;
 }
 </style>
