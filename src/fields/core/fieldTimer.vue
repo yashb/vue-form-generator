@@ -39,7 +39,7 @@ export default({
   },
   methods: {
     setSubtractStartTime: function (time) {
-      let time = typeof time !== 'undefined' ? time : 0;
+      // let time = typeof time !== 'undefined' ? time : 0;
       this.startTime = Math.floor(performance.now() - time);
     },
     startTimer: function () {
