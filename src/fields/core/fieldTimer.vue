@@ -24,7 +24,7 @@
 import abstractField from "../abstractField";
 export default({
 	mixins: [ abstractField ],
-	name: "Timer",
+	// name: "Timer",
 	data(){
 		return {
 			times: [],
