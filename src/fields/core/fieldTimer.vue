@@ -1,7 +1,9 @@
 <template>
-	<div class="timer">
+	<div class="timerset">
     <span style="font-size:20px">
-			<input type="hidden" name="timerBOH" v-model="diffTime" />{{ minutes }}:{{ seconds }}:{{ milliSeconds }} </span>
+			<input type="hidden" name="timerBOH" v-model="diffTime" />
+			{{ minutes }}:{{ seconds }}:{{ milliSeconds }}
+		</span>
 
       <div :class="schema.tbutton">
         <a type="submit" class="button is-info is-outlined" @click="startTimer" :disabled="isRunning">START</a>
@@ -23,7 +25,7 @@
 <script>
 import abstractField from "../abstractField";
 export default({
-	mixins: [ abstractField ],
+	
 	name: "Timer",
 	data(){
 		return {
