@@ -1,6 +1,7 @@
 <template>
 	<div class="timer">
-    <span style="font-size:20px"><input type="hidden" name="timerhidden" v-model="diffTime" />{{ minutes }}:{{ seconds }}:{{ milliSeconds }} </span>
+    <span style="font-size:20px">
+			<input type="hidden" name="timerhidden" v-model="diffTime" />{{ minutes }}:{{ seconds }}:{{ milliSeconds }} </span>
 
       <div class="tbutton">
         <button class="button1 is-info is-outlined" @click="startTimer" :disabled="isRunning">START</button>
