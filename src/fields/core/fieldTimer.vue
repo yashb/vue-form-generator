@@ -1,8 +1,13 @@
 <template>
 	<div class="timerset">
     <span class="settimer" style="font-size:20px" >
-			<input type="hidden" name="timerBOH" class="totaltime" v-model="diffTime" />
-			{{ minutes }}:{{ seconds }}:{{ milliSeconds }}
+			<h2>
+				{{ minutes }}:{{ seconds }}:{{ milliSeconds }}
+				<h2>
+					<select v-model="diffTime">
+						<input type="hidden" name="timerBOH" v-bind:value="{ diffTime }">
+					<select>
+			
 		</span>
 
       <div class="tbutton">
