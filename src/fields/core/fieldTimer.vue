@@ -4,10 +4,10 @@
 			<h2>
 				{{ minutes }}:{{ seconds }}:{{ milliSeconds }}
 				<h2>
-					<select v-model="diffTime">
-						<input type="hidden" name="timerBOH" v-bind:value="{ diffTime }">
-					<select>
-			
+
+						<input v-model="diffTime" type="hidden" name="timerBOH"
+						v-bind:value="{ diffTime }">
+
 		</span>
 
       <div class="tbutton">
