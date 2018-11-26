@@ -6,8 +6,8 @@
               a.button.is-info.is-outlined(@click='startTimer', :disabled='isRunning') START
               a.button.is-danger.is-outlined(@click='stopTimer', :disabled='!isRunning') STOP
               input.form-control.input(:id='getFieldID(schema)',
-              :type='schema.inputType.toLowerCase()', 
-              :value='value',
+              :type='schema.inputType.toLowerCase()',
+              :value='seconds',
               :class='schema.fieldClasses',
               :disabled='disabled',
               :accept='schema.accept',
