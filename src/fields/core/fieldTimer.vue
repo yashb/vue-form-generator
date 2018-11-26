@@ -69,7 +69,6 @@ export default({
 			nowTime: 0,
 			diffTime: 0,
 			startTime: 0,
-
 			isRunning: false
 		};
 
@@ -122,8 +121,8 @@ export default({
 					break;
 			}
 			this.value = value;
-			this.minutes = Math.floor(value / 60);
-			this.seconds = Math.floor(value % 60);
+			this.finalValue = value;
+			//this.seconds = Math.floor(value % 60);
 		},
 		onBlur() {
 			if(isFunction(this.debouncedFormatFunc)) {
@@ -151,7 +150,7 @@ export default({
 		stopTimer: function () {
 			this.isRunning = false;
 			cancelAnimationFrame(this.animateFrame);
-			this.value = (this.minutes * 60) + this.seconds; //total seconds
+			this.value = this.diffTime; // (this.minutes * 60) + this.seconds; //total seconds
 		},
 		pushTime: function () {
 			this.times.push({
@@ -172,6 +171,7 @@ export default({
 	},
 
 	computed: {
+
 		hours: function () {
 			return Math.floor(this.diffTime / 1000 / 60 / 60);
 		},
@@ -184,8 +184,13 @@ export default({
 		milliSeconds: function () {
 			return Math.floor(this.diffTime % 1000);
 		},
-		finalValue: function(){
-			return this.diffTime;
+		finalValue:{
+			get() {
+				return this.diffTime;
+			},
+			set(value){
+				this.diffTime = value;
+			}
 		}
 	},
 
