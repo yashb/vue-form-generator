@@ -7,8 +7,11 @@
               a.button.is-danger.is-outlined(@click='stopTimer', :disabled='!isRunning') STOP
               input.form-control.input(:id='getFieldID(schema)',
               :type='schema.inputType.toLowerCase()',
-              :value='seconds',
+              :value='value',
+              @input='onInput',
+              @blur='onBlur',
               :class='schema.fieldClasses',
+              @change='schema.onChange || null',
               :disabled='disabled',
               :accept='schema.accept',
               :alt='schema.alt',
@@ -43,6 +46,15 @@
 
 <script>
 import abstractField from "../abstractField";
+import { isFunction, isNumber } from "lodash";
+import fecha from "fecha";
+
+const DATETIME_FORMATS = {
+	"date": "YYYY-MM-DD",
+	"datetime": "YYYY-MM-DD HH:mm:ss",
+	"datetime-local": "YYYY-MM-DDTHH:mm:ss",
+};
+
 export default({
   // name: "Timer",
 	mixins: [ abstractField ],
@@ -59,6 +71,62 @@ export default({
 
   },
   methods: {
+
+		formatValueToModel(value) {
+			if (value != null) {
+				switch (this.schema.inputType.toLowerCase()) {
+					case "date":
+					case "datetime":
+					case "datetime-local":
+					case "number":
+					case "range":
+						// debounce
+						return (newValue, oldValue) => {
+							this.debouncedFormatFunc(value, oldValue);
+						};
+				}
+			}
+
+			return value;
+		},
+		formatDatetimeToModel(newValue, oldValue) {
+			let defaultFormat = DATETIME_FORMATS[this.schema.inputType.toLowerCase()];
+			let m = fecha.parse(newValue, defaultFormat);
+			if (m !== false) {
+				if (this.schema.format) {
+					newValue = fecha.format(m, this.schema.format);
+				} else {
+					newValue = m.valueOf();
+				}
+			}
+			this.updateModelValue(newValue, oldValue);
+		},
+		formatNumberToModel(newValue, oldValue) {
+			if(!isNumber(newValue)) {
+				newValue = NaN;
+			}
+			this.updateModelValue(newValue, oldValue);
+		},
+		onInput($event) {
+			let value = $event.target.value;
+			switch(this.schema.inputType.toLowerCase()) {
+				case "number":
+				case "range":
+					if(isNumber($event.target.valueAsNumber)) {
+						value = $event.target.valueAsNumber;
+					}
+					break;
+			}
+			this.value = value;
+		},
+		onBlur() {
+			if(isFunction(this.debouncedFormatFunc)) {
+				this.debouncedFormatFunc.flush();
+			}
+		},
+
+
+
     setSubtractStartTime: function (time) {
       // let time = typeof time !== 'undefined' ? time : 0;
       this.startTime = Math.floor(performance.now() - time);
@@ -77,6 +145,7 @@ export default({
     stopTimer: function () {
       this.isRunning = false;
       cancelAnimationFrame(this.animateFrame);
+      this.value = this.seconds;
     },
     pushTime: function () {
       this.times.push({
@@ -95,6 +164,7 @@ export default({
     //   this.animateFrame = 0;
     // }
   },
+
   computed: {
     hours: function () {
       return Math.floor(this.diffTime / 1000 / 60 / 60);
