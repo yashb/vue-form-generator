@@ -1,12 +1,14 @@
 <template lang="pug">
 .timerset
-	h2 {{schema.title}}
+	h2.label {{schema.title}}
 	.columns
 		.column.is-2
 			div.settimer.label {{ minutes }}:{{ seconds }}:{{ milliSeconds }}
-		.column.is-4
-			a.button.is-info.is-outlined(@click='startTimer', :disabled='isRunning') START
-			a.button.is-danger.is-outlined(@click='stopTimer', :disabled='!isRunning') STOP
+		.column.is-1
+			a.button.is-info.is-outlined.is-normal(@click='startTimer', :disabled='isRunning') START
+		.column.is-1
+			a.button.is-danger.is-outlined.is-normal(@click='stopTimer', :disabled='!isRunning') STOP
+		.column.is-9
 			input.form-control.input(:id='getFieldID(schema)',
 			:type='schema.inputType.toLowerCase()',
 			:value='value',
@@ -190,5 +192,8 @@ export default({
 });
 </script>
 <style lang="css">
-
+    .settimer {
+        font-size: 23px;
+        margin-top: 2px;
+    }
 </style>
