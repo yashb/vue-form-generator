@@ -73,6 +73,18 @@ export default({
 		};
 
 	},
+
+	mounted() {
+		console.log("TimerField Mounted called");
+		this.finalValue = this.value;
+	},
+
+	// watch: {
+	// 	diffTime: function(val, oldVal) {
+	//
+	// 	}
+	// },
+
 	methods: {
 
 		formatValueToModel(value) {
