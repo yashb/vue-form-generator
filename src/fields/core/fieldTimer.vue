@@ -1,25 +1,50 @@
 <template>
-	<div class="timerset">
-    <span class="settimer" style="font-size:20px" >
-			<h2> <input type="hidden" name="timerBOH" class="totaltime" v-model="diffTime" />{{schema.diffTime}}<h2>
-			{{ minutes }}:{{ seconds }}:{{ milliSeconds }}
-		</span>
+	.timerset
+  h2 {{schema.title}}
+  h2
+    .tbutton
+      span.settimer(style='font-size:20px')
+        | {{ minutes }}:{{ seconds }}:{{ milliSeconds }}
+      a.button.is-info.is-outlined(@click='startTimer', :disabled='isRunning') START
+      a.button.is-danger.is-outlined(@click='stopTimer', :disabled='!isRunning') STOP
+      input.form-control.input(
+                		:id="getFieldID(schema)",
+                		:type="schema.inputType.toLowerCase()",
+                		:value="seconds",
+                		@input="onInput",
+                		@blur="onBlur",
+                		:class="schema.fieldClasses",
+                		@change="schema.onChange || null",
+                		:disabled="disabled",
+                		:accept="schema.accept",
+                		:alt="schema.alt",
+                		:autocomplete="schema.autocomplete",
+                		:checked="schema.checked",
+                		:dirname="schema.dirname",
+                		:formaction="schema.formaction",
+                		:formenctype="schema.formenctype",
+                		:formmethod="schema.formmethod",
+                		:formnovalidate="schema.formnovalidate",
+                		:formtarget="schema.formtarget",
+                		:height="schema.height",
+                		:list="schema.list",
+                		:max="schema.max",
+                		:maxlength="schema.maxlength",
+                		:min="schema.min",
+                		:minlength="schema.minlength",
+                		:multiple="schema.multiple",
+                		:name="schema.inputName",
+                		:pattern="schema.pattern",
+                		:placeholder="schema.placeholder",
+                		:readonly="schema.readonly",
+                		:required="schema.required",
+                		:size="schema.size",
+                		:src="schema.src",
+                		:step="schema.step",
+                		:width="schema.width",
+                		:files="schema.files")
+      span.helper(v-if="schema.inputType.toLowerCase() === 'color' || schema.inputType.toLowerCase() === 'range'") {{ value }}
 
-      <div class="tbutton">
-        <a class="button is-info is-outlined" @click="startTimer" :disabled="isRunning">START</a>
-        <a class="button is-danger is-outlined" @click="stopTimer" :disabled="!isRunning">STOP</a>
-      </div>
-  </div>
-	<!-- <div class="timer">
-		<div>
-
-			<span>{{ minutes }}:{{ seconds }}:{{ milliSeconds }}</span>
-		</div>
-    <div>
-      <button class="button is-info is-outlined" @click="startTimer" :disabled="isRunning">START</button>
-      <button class="button is-danger is-outlined" @click="stopTimer" :disabled="!isRunning">STOP</button>
-    </div>
-  </div> -->
 </template>
 
 <script>
@@ -34,6 +59,7 @@ export default({
       nowTime: 0,
       diffTime: 0,
       startTime: 0,
+      
       isRunning: false
     };
 
@@ -50,6 +76,7 @@ export default({
         vm.nowTime = Math.floor(performance.now());
         vm.diffTime = vm.nowTime - vm.startTime;
         vm.animateFrame = requestAnimationFrame(loop);
+	
       }());
       vm.isRunning = true;
     },
