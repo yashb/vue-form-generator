@@ -1,5 +1,5 @@
 <template lang="pug">
-#timer.timerset
+#Timer.timerset
 	h2.label {{schema.title}}
 	.columns
 		.column.is-2
@@ -60,7 +60,7 @@ const DATETIME_FORMATS = {
 };
 
 export default({
-	// name: "Timer",
+	name: "Timer",
 	mixins: [ abstractField ],
 	data(){
 		return {
