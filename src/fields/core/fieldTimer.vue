@@ -1,5 +1,5 @@
 <template lang="pug">
-#timer.timerset
+#app.timerset
 	h2.label {{schema.title}}
 	.columns
 		.column.is-2
@@ -45,9 +45,7 @@
 			:width='schema.width',
 			:files='schema.files')
 			span.helper(v-if="schema.inputType.toLowerCase() === 'color' || schema.inputType.toLowerCase() === 'range'") {{ value }}
-
 </template>
-
 <script>
 import abstractField from "../abstractField";
 import { isFunction, isNumber } from "lodash";
@@ -61,7 +59,7 @@ const DATETIME_FORMATS = {
 
 
 export default({
-	name: "#Timer",
+	name: 'app',
 	mixins: [ abstractField ],
 	data(){
 		return {
