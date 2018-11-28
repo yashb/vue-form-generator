@@ -1,5 +1,5 @@
 <template lang="pug">
-.timerset
+#timer.timerset
 	h2.label {{schema.title}}
 	.columns
 		.column.is-2
