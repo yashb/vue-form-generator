@@ -5,9 +5,9 @@
 		.column.is-2
 			div.settimer.label {{ minutes }}:{{ seconds }}:{{ milliSeconds }}
 		.column.is-1
-			a.button.is-info.is-outlined.is-normal(@click='startTimer', :disabled='isRunning') START
+			a.button.is-info.is-outlined.is-normal(@click='startTimer', :required='schema.required', :disabled='isRunning') START
 		.column.is-1
-			a.button.is-danger.is-outlined.is-normal(@click='stopTimer', :disabled='!isRunning') STOP
+			a.button.is-danger.is-outlined.is-normal(@click='stopTimer', :required='schema.required', :disabled='!isRunning') STOP
 		.column.is-9
 			input.form-control.input(:id='getFieldID(schema)',
 			:type='schema.inputType.toLowerCase()',
