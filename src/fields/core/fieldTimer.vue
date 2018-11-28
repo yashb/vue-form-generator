@@ -2,7 +2,7 @@
 #app.timerset
 	h2.label {{schema.title}}
 	.columns
-		.column.is-2
+		#total.column.is-2
 			div.settimer.label {{ minutes }}:{{ seconds }}:{{ milliSeconds }}
 		.column.is-1
 			a.button.is-info.is-outlined.is-normal(@click='startTimer', :required='schema.required', :disabled='isRunning') START
@@ -60,7 +60,7 @@ const DATETIME_FORMATS = {
 
 export default({
 	name: 'app',
-	// mixins: [ abstractField ],
+	mixins: [ abstractField ],
 	data(){
 		return {
 			times: [],
