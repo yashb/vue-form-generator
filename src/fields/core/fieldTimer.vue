@@ -1,6 +1,6 @@
 <template lang="pug">
-#Timer.timerset
-	h2.label {{schema.title}}
+#timer.timerset
+	h2.label (v-repeat='timer'){{schema.title}}
 	.columns
 		.column.is-2
 			div.settimer.label {{ minutes }}:{{ seconds }}:{{ milliSeconds }}
@@ -60,7 +60,7 @@ const DATETIME_FORMATS = {
 };
 
 export default({
-	name: "Timer",
+	// name: "Timer",
 	mixins: [ abstractField ],
 	data(){
 		return {
