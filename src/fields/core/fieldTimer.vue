@@ -1,15 +1,16 @@
 <template lang="pug">
-#app.timerset
+#app1.timerset
 	h2.label {{schema.title}}
 	.columns
-		#total.column.is-2
+		.column.is-2
 			div.settimer.label {{ minutes }}:{{ seconds }}:{{ milliSeconds }}
 		.column.is-1
 			a.button.is-info.is-outlined.is-normal(@click='startTimer', :required='schema.required', :disabled='isRunning') START
 		.column.is-1
 			a.button.is-danger.is-outlined.is-normal(@click='stopTimer', :required='schema.required', :disabled='!isRunning') STOP
 		.column.is-9
-			input.form-control.input(:id='getFieldID(schema)',
+			input.form-control.input(
+			:id='getFieldID(schema)',
 			:type='schema.inputType.toLowerCase()',
 			:value='value',
 			@input='onInput',
