@@ -60,7 +60,7 @@ const DATETIME_FORMATS = {
 
 export default({
 	name: 'app',
-	mixins: [ abstractField ],
+	// mixins: [ abstractField ],
 	data(){
 		return {
 			times: [],
