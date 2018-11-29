@@ -1,5 +1,5 @@
 <template lang="pug">
-#app1.timerset
+.timerset (v-bind:is='name')
 	h2.label {{schema.title}}
 	.columns
 		.column.is-2
@@ -47,6 +47,7 @@
 			:files='schema.files')
 			span.helper(v-if="schema.inputType.toLowerCase() === 'color' || schema.inputType.toLowerCase() === 'range'") {{ value }}
 </template>
+
 <script>
 import abstractField from "../abstractField";
 import { isFunction, isNumber } from "lodash";
@@ -61,6 +62,7 @@ const DATETIME_FORMATS = {
 
 export default({
 	name: 'app',
+
 	mixins: [ abstractField ],
 	data(){
 		return {
@@ -144,8 +146,8 @@ export default({
 
 
 
-		setSubtractStartTime: function () {
-			let time = typeof time !== 'undefined' ? time : 0;
+		setSubtractStartTime: function (time) {
+			// let time = typeof time !== 'undefined' ? time : 0;
 			this.startTime = Math.floor(performance.now() - time);
 		},
 		startTimer: function () {
