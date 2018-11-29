@@ -1,5 +1,5 @@
 <template lang="pug">
-.timerset (:for='id')
+#app.timerset(:id='id')
 	h2.label {{schema.title}}
 	.columns
 		.column.is-2
