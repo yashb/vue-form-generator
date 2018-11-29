@@ -62,6 +62,7 @@ const DATETIME_FORMATS = {
 
 export default({
 	name: 'app',
+	id: '1',
 
 	mixins: [ abstractField ],
 	data(){
@@ -72,7 +73,7 @@ export default({
 			diffTime: 0,
 			startTime: 0,
 			isRunning: false,
-			id: null
+			id: 1
 		};
 
 	},
@@ -147,8 +148,8 @@ export default({
 
 
 
-		setSubtractStartTime: function () {
-			let time = typeof time !== 'undefined' ? time : 0;
+		setSubtractStartTime: function (time) {
+			// let time = typeof time !== 'undefined' ? time : 0;
 			this.startTime = Math.floor(performance.now() - time);
 		},
 		startTimer: function () {
