@@ -1,5 +1,5 @@
 <template lang="pug">
-.timerset
+.timerset(:id='schema.id')
 	h2.label {{schema.title}}
 	.columnsn
 		.column.is-2
@@ -62,10 +62,10 @@ const DATETIME_FORMATS = {
 
 export default({
 //name: 'app',
-	// id: null,
+	id: null,
 
 	mixins: [ abstractField ],
-	data: function(){
+	data(){
 		return {
 			times: [],
 			animateFrame: 0,
@@ -149,7 +149,7 @@ export default({
 
 
 		setSubtractStartTime: function (time) {
-			// let time = typeof time !== 'undefined' ? time : 0;
+			let time = typeof time !== 'undefined' ? time : 0;
 			this.startTime = Math.floor(performance.now() - time);
 		},
 		startTimer: function () {
