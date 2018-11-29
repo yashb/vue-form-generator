@@ -1,5 +1,5 @@
 <template lang="pug">
-#app.timerset(:id='id')
+#app.timerset(:id='')
 	h2.label {{schema.title}}
 	.columns
 		.column.is-2
@@ -73,7 +73,7 @@ export default({
 			diffTime: 0,
 			startTime: 0,
 			isRunning: false,
-			id: 1
+			id: null
 		};
 
 	},
