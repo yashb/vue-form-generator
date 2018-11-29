@@ -1,7 +1,7 @@
 <template lang="pug">
-.timerset(:id='schema.id')
+.timerset
 	h2.label {{schema.title}}
-	.columns
+	.columnsn
 		.column.is-2
 			div.settimer.label {{ minutes }}:{{ seconds }}:{{ milliSeconds }}
 		.column.is-1
@@ -62,7 +62,7 @@ const DATETIME_FORMATS = {
 
 export default({
 //name: 'app',
-	id: null,
+	// id: null,
 
 	mixins: [ abstractField ],
 	data(){
@@ -73,7 +73,7 @@ export default({
 			diffTime: 0,
 			startTime: 0,
 			isRunning: false,
-			id: null
+			// id: null
 		};
 
 	},
