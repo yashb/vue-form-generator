@@ -1,5 +1,5 @@
 <template lang="pug">
-.timerset (v-bind:is='name')
+.timerset (:for='id')
 	h2.label {{schema.title}}
 	.columns
 		.column.is-2
@@ -71,7 +71,8 @@ export default({
 			nowTime: 0,
 			diffTime: 0,
 			startTime: 0,
-			isRunning: false
+			isRunning: false,
+			id: null
 		};
 
 	},
@@ -146,8 +147,8 @@ export default({
 
 
 
-		setSubtractStartTime: function (time) {
-			// let time = typeof time !== 'undefined' ? time : 0;
+		setSubtractStartTime: function () {
+			let time = typeof time !== 'undefined' ? time : 0;
 			this.startTime = Math.floor(performance.now() - time);
 		},
 		startTimer: function () {
