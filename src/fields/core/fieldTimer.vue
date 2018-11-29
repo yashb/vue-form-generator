@@ -1,5 +1,5 @@
 <template lang="pug">
-#app.timerset(:id='')
+.timerset(:id='schema.id')
 	h2.label {{schema.title}}
 	.columns
 		.column.is-2
@@ -61,7 +61,7 @@ const DATETIME_FORMATS = {
 
 
 export default({
-	name: 'app',
+//name: 'app',
 	id: null,
 
 	mixins: [ abstractField ],
