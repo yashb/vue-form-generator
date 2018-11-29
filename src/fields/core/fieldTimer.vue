@@ -65,7 +65,7 @@ export default({
 	// id: null,
 
 	mixins: [ abstractField ],
-	data(){
+	data: function(){
 		return {
 			times: [],
 			animateFrame: 0,
