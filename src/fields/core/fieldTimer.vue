@@ -1,5 +1,5 @@
 <template lang="pug">
-.timerset(:id='schema.id')
+.timerset(:id='schema.id', @change='schema.onChange || null')
 	h2.label {{schema.title}}
 	.columnsn
 		.column.is-2
@@ -73,7 +73,7 @@ export default({
 			diffTime: 0,
 			startTime: 0,
 			isRunning: false,
-			// id: null
+			id: null
 		};
 
 	},
@@ -148,7 +148,7 @@ export default({
 
 
 
-		setSubtractStartTime: function (time) {
+		setSubtractStartTime: function () {
 			let time = typeof time !== 'undefined' ? time : 0;
 			this.startTime = Math.floor(performance.now() - time);
 		},
