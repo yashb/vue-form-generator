@@ -1,7 +1,7 @@
 <template lang="pug">
-.timerset(:id='schema.id',)
+.timerset
 	h2.label {{schema.title}}
-	.columns
+	.columns(:id='schema.id',)
 		.column.is-2
 			div.settimer.label {{ minutes }}:{{ seconds }}:{{ milliSeconds }}
 		.column.is-1
