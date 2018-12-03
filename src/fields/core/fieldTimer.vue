@@ -1,5 +1,5 @@
 <template lang="pug">
-.timerset(v-model='value')
+.timerset(:id='getFieldID(schema)')
 	h2.label {{schema.title}}
 	.columns(:id='schema.id')
 		.column.is-2
@@ -10,7 +10,6 @@
 			a.button.is-danger.is-outlined.is-normal(@click='stopTimer',  :disabled='!isRunning') STOP
 		.column.is-9
 			input.form-control.input(
-
 			:id='getFieldID(schema)',
 			:type='schema.inputType.toLowerCase()',
 			:value='value',
