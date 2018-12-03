@@ -10,6 +10,7 @@
 			a.button.is-danger.is-outlined.is-normal(@click='stopTimer',  :disabled='!isRunning') STOP
 		.column.is-9
 			input.form-control.input(
+			v-model="value",
 			:id='getFieldID(schema)',
 			:type='schema.inputType.toLowerCase()',
 			:value='value',
