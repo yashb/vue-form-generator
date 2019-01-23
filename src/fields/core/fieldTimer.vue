@@ -3,7 +3,7 @@
 	h2.label {{schema.title}}
 	.columns
 		.column.is-2
-			div.settimer.label {{ minutes }}:{{ seconds }}:{{ milliSeconds }}
+			div.settimer.label {{ minutes() }}:{{ seconds() }}:{{ milliSeconds() }}
 		.column.is-1
 			a.button.is-info.is-outlined.is-normal(@click='startTimer', :disabled='isRunning') START
 		.column.is-1
@@ -169,11 +169,23 @@ export default({
 		},
 		pushTime: function () {
 			this.times.push({
-				hours: this.hours,
-				minutes: this.minutes,
-				seconds: this.seconds,
-				milliSeconds: this.milliSeconds
+				hours: this.hours(),
+				minutes: this.minutes(),
+				seconds: this.seconds(),
+				milliSeconds: this.milliSeconds()
 			});
+		},
+		hours: function () {
+			return Math.floor(this.diffTime / 1000 / 60 / 60);
+		},
+		minutes: function () {
+			return Math.floor(this.diffTime / 1000 / 60) % 60;
+		},
+		seconds: function () {
+			return Math.floor(this.diffTime / 1000) % 60;
+		},
+		milliSeconds: function () {
+			return Math.floor(this.diffTime % 1000);
 		},
 		// clearAll: function () {
 		//   this.startTime = 0;
@@ -187,18 +199,7 @@ export default({
 
 	computed: {
 
-		hours: function () {
-			return Math.floor(this.diffTime / 1000 / 60 / 60);
-		},
-		minutes: function () {
-			return Math.floor(this.diffTime / 1000 / 60) % 60;
-		},
-		seconds: function () {
-			return Math.floor(this.diffTime / 1000) % 60;
-		},
-		milliSeconds: function () {
-			return Math.floor(this.diffTime % 1000);
-		},
+
 		finalValue:{
 			get() {
 				return this.diffTime;
