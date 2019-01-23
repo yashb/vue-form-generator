@@ -3,7 +3,7 @@
 	h2.label {{schema.title}}
 	.columns
 		.column.is-2
-			div.settimer.label {{ minutes }}:{{ seconds }}:{{ milliSeconds }}
+			div.settimer.label {{ mins }}:{{ secs }}:{{ milli_secs }}
 		.column.is-1
 			a.button.is-info.is-outlined.is-normal(@click='startTimer', :disabled='isRunning') START
 		.column.is-1
@@ -69,7 +69,12 @@ export default({
 			nowTime: 0,
 			diffTime: 0,
 			startTime: 0,
-			isRunning: false
+			isRunning: false,
+			hrs:0,
+			mins:0,
+			secs:0,
+			milli_secs:0
+
 		};
 
 	},
@@ -135,6 +140,12 @@ export default({
 			this.value = value;
 			this.finalValue = value;
 			//this.seconds = Math.floor(value % 60);
+
+			//call them
+			this.hrs = this.hours();
+			this.mins = this.minutes();
+			this.secs = this.seconds();
+			this.milli_secs = this.milliSeconds();
 		},
 		onBlur() {
 			if(isFunction(this.debouncedFormatFunc)) {
@@ -154,6 +165,10 @@ export default({
 			(function loop(){
 				vm.nowTime = Math.floor(performance.now());
 				vm.diffTime = vm.nowTime - vm.startTime;
+				this.hrs = this.hours();
+				this.mins = this.minutes();
+				this.secs = this.seconds();
+				this.milli_secs = this.milliSeconds();
 				vm.animateFrame = requestAnimationFrame(loop);
 
 			}());
