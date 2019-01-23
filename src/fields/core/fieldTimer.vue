@@ -165,10 +165,10 @@ export default({
 			(function loop(){
 				vm.nowTime = Math.floor(performance.now());
 				vm.diffTime = vm.nowTime - vm.startTime;
-				this.hrs = this.hours;
-				this.mins = this.minutes;
-				this.secs = this.seconds;
-				this.milli_secs = this.milliSeconds;
+				vm.hrs = vm.hours;
+				vm.mins = vm.minutes;
+				vm.secs = vm.seconds;
+				vm.milli_secs = vm.milliSeconds;
 				vm.animateFrame = requestAnimationFrame(loop);
 
 			}());
@@ -180,6 +180,7 @@ export default({
 			this.value = this.diffTime; // (this.minutes * 60) + this.seconds; //total seconds
 		},
 		pushTime: function () {
+
 			this.times.push({
 				hours: this.hours,
 				minutes: this.minutes,
