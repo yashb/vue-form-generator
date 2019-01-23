@@ -77,6 +77,7 @@ export default({
 	mounted() {
 		console.log("TimerField Mounted called");
 		this.finalValue = this.value;
+		this.$forceUpdate();
 	},
 
 	// watch: {
@@ -135,6 +136,7 @@ export default({
 			this.value = value;
 			this.finalValue = value;
 			this.diffTime = value;
+			this.$forceUpdate();
 			//this.seconds = Math.floor(value % 60);
 		},
 		onBlur() {
