@@ -134,8 +134,8 @@ export default({
 			}
 			this.value = value;
 			this.finalValue = value;
+			this.diffTime = value;
 			//this.seconds = Math.floor(value % 60);
-			this.$forceUpdate();
 		},
 		onBlur() {
 			if(isFunction(this.debouncedFormatFunc)) {
