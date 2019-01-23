@@ -142,10 +142,10 @@ export default({
 			//this.seconds = Math.floor(value % 60);
 
 			//call them
-			this.hrs = this.hours();
-			this.mins = this.minutes();
-			this.secs = this.seconds();
-			this.milli_secs = this.milliSeconds();
+			this.hrs = this.hours;
+			this.mins = this.minutes;
+			this.secs = this.seconds;
+			this.milli_secs = this.milliSeconds;
 		},
 		onBlur() {
 			if(isFunction(this.debouncedFormatFunc)) {
@@ -165,10 +165,10 @@ export default({
 			(function loop(){
 				vm.nowTime = Math.floor(performance.now());
 				vm.diffTime = vm.nowTime - vm.startTime;
-				this.hrs = this.hours();
-				this.mins = this.minutes();
-				this.secs = this.seconds();
-				this.milli_secs = this.milliSeconds();
+				this.hrs = this.hours;
+				this.mins = this.minutes;
+				this.secs = this.seconds;
+				this.milli_secs = this.milliSeconds;
 				vm.animateFrame = requestAnimationFrame(loop);
 
 			}());
