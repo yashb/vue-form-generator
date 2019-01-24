@@ -81,14 +81,21 @@ export default({
 
 	},
 
-	beforeCreate() { console.log("beforeCreate TimerField");},
-	created() { console.log("created TimerField");},
-	beforeMount() { console.log("beforeMount TimerField");},
+	watch: {
+		value: function (newValue, oldValue) {
+			console.log("newValue", newValue, "oldVal", oldValue);
+			this.forceTimerUpdate();
+		}
+	},
 
-	beforeUpdate() { console.log("beforeUpdate TimerField");},
-	updated() { console.log("updated TimerField");},
-	activated() { console.log("activated TimerField");},
-	deactivated() { console.log("deactivated TimerField");},
+	// beforeCreate() { console.log("beforeCreate TimerField");},
+	// created() { console.log("created TimerField");},
+	// beforeMount() { console.log("beforeMount TimerField");},
+	//
+	// beforeUpdate() { console.log("beforeUpdate TimerField");},
+	// updated() { console.log("updated TimerField");},
+	// activated() { console.log("activated TimerField");},
+	// deactivated() { console.log("deactivated TimerField");},
 
 
 	// watch: {
