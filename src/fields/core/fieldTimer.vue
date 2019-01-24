@@ -3,7 +3,7 @@
 	h2.label {{schema.title}}
 	.columns
 		.column.is-2
-			div.settimer.label {{ minutes() }}:{{ seconds() }}:{{ milliSeconds() }}
+			div.settimer.label {{ minutes }}:{{ seconds }}:{{ milliSeconds }}
 		.column.is-1
 			a.button.is-info.is-outlined.is-normal(@click='startTimer', :disabled='isRunning') START
 		.column.is-1
@@ -76,8 +76,9 @@ export default({
 
 	mounted() {
 		console.log("TimerField Mounted called");
-		this.finalValue = this.value;
-		this.$forceUpdate();
+
+		this.forceTimerUpdate();
+
 	},
 
 	// watch: {
@@ -88,6 +89,20 @@ export default({
 
 	methods: {
 
+		forceTimerUpdate(){
+			console.log("Staring\nseconds", this.seconds);
+			console.log("minutes", this.minutes);
+			console.log("milliSeconds", this.milliSeconds);
+
+			this.finalValue = this.value;
+
+			//this.seconds = Math.floor(value % 60);
+			console.log("difftime", this.diffTime);
+			console.log("finalValue", this.finalValue);
+			console.log("seconds", this.seconds);
+			console.log("minutes", this.minutes);
+			console.log("milliSeconds", this.milliSeconds);
+		},
 		formatValueToModel(value) {
 			if (value != null) {
 				switch (this.schema.inputType.toLowerCase()) {
@@ -134,10 +149,8 @@ export default({
 					break;
 			}
 			this.value = value;
-			this.finalValue = value;
-			this.diffTime = value;
-			this.$forceUpdate();
-			//this.seconds = Math.floor(value % 60);
+			console.log("ONBLUR");
+			this.forceTimerUpdate();
 		},
 		onBlur() {
 			if(isFunction(this.debouncedFormatFunc)) {
@@ -169,24 +182,13 @@ export default({
 		},
 		pushTime: function () {
 			this.times.push({
-				hours: this.hours(),
-				minutes: this.minutes(),
-				seconds: this.seconds(),
-				milliSeconds: this.milliSeconds()
+				hours: this.hours,
+				minutes: this.minutes,
+				seconds: this.seconds,
+				milliSeconds: this.milliSeconds
 			});
 		},
-		hours: function () {
-			return Math.floor(this.diffTime / 1000 / 60 / 60);
-		},
-		minutes: function () {
-			return Math.floor(this.diffTime / 1000 / 60) % 60;
-		},
-		seconds: function () {
-			return Math.floor(this.diffTime / 1000) % 60;
-		},
-		milliSeconds: function () {
-			return Math.floor(this.diffTime % 1000);
-		},
+
 		// clearAll: function () {
 		//   this.startTime = 0;
 		//   this.nowTime = 0;
@@ -199,6 +201,18 @@ export default({
 
 	computed: {
 
+		hours: function () {
+			return Math.floor(this.diffTime / 1000 / 60 / 60);
+		},
+		minutes: function () {
+			return Math.floor(this.diffTime / 1000 / 60) % 60;
+		},
+		seconds: function () {
+			return Math.floor(this.diffTime / 1000) % 60;
+		},
+		milliSeconds: function () {
+			return Math.floor(this.diffTime % 1000);
+		},
 
 		finalValue:{
 			get() {
