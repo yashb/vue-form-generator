@@ -81,6 +81,16 @@ export default({
 
 	},
 
+	beforeCreate() { console.log("beforeCreate TimerField");},
+	created() { console.log("created TimerField");},
+	beforeMount() { console.log("beforeMount TimerField");},
+
+	beforeUpdate() { console.log("beforeUpdate TimerField");},
+	updated() { console.log("updated TimerField");},
+	activated() { console.log("activated TimerField");},
+	deactivated() { console.log("deactivated TimerField");},
+
+
 	// watch: {
 	// 	diffTime: function(val, oldVal) {
 	//
