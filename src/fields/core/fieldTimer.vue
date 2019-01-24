@@ -75,7 +75,7 @@ export default({
 	},
 
 	mounted() {
-		console.log("TimerField Mounted called");
+		//console.log("TimerField Mounted called");
 
 		this.forceTimerUpdate();
 
@@ -83,8 +83,10 @@ export default({
 
 	watch: {
 		value: function (newValue, oldValue) {
-			console.log("newValue", newValue, "oldVal", oldValue);
+			//console.log("newValue", newValue, "oldVal", oldValue);
+
 			this.forceTimerUpdate();
+
 		}
 	},
 
@@ -107,18 +109,23 @@ export default({
 	methods: {
 
 		forceTimerUpdate(){
-			console.log("Staring\nseconds", this.seconds);
-			console.log("minutes", this.minutes);
-			console.log("milliSeconds", this.milliSeconds);
+
+			if(this.value < 0 || this.value == null){
+				this.value = 0;
+			}
+
+			//console.log("Staring\nseconds", this.seconds);
+			//console.log("minutes", this.minutes);
+			//console.log("milliSeconds", this.milliSeconds);
 
 			this.finalValue = this.value;
 
 			//this.seconds = Math.floor(value % 60);
-			console.log("difftime", this.diffTime);
-			console.log("finalValue", this.finalValue);
-			console.log("seconds", this.seconds);
-			console.log("minutes", this.minutes);
-			console.log("milliSeconds", this.milliSeconds);
+			//console.log("difftime", this.diffTime);
+			//console.log("finalValue", this.finalValue);
+			//console.log("seconds", this.seconds);
+			//console.log("minutes", this.minutes);
+			//console.log("milliSeconds", this.milliSeconds);
 		},
 		formatValueToModel(value) {
 			if (value != null) {
@@ -166,7 +173,7 @@ export default({
 					break;
 			}
 			this.value = value;
-			console.log("ONBLUR");
+			//console.log("ONBLUR");
 			this.forceTimerUpdate();
 		},
 		onBlur() {
